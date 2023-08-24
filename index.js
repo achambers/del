@@ -27,11 +27,18 @@ program
   .version(pkg.version)
   .description(pkg.description)
   .option('-d, --delete-found-components', 'Deletes components found in project')
+  .option('-F, --file <path-to-file>', 'Specify json file containing an array of component paths to check', UNSEEN_PATH)
   .option('-f, --found', 'Show found components')
   .option('-nf, --not-found', 'Show not found components')
   .action(async (options, command) => {
-    if (await exists(UNSEEN_PATH)) {
-      let unseen = JSON.parse(await readFile(UNSEEN_PATH));
+    let { file } = options;
+
+    if (!(await exists(path.resolve(file)))) {
+      command.error(chalk.redBright(`File ${options.file} does not exist`));
+    }
+
+    if (await exists(file)) {
+      let unseen = JSON.parse(await readFile(file));
 
       unseen = unseen
         .map(i => i.replace('component:', ''))
