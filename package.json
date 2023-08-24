@@ -1,0 +1,11 @@
+{
+  "name": "del",
+  "version": "0.0.0",
+  "description": "",
+  "bin": "./index.js",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^11.0.0",
+    "figlet": "^1.6.0"
+  }
+}
